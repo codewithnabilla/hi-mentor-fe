@@ -3,6 +3,10 @@ import { useLogin } from "../../hooks/useLogin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../schemas/auth.schema";
 import { Navigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 
 
 export default function LoginPage() {
@@ -31,36 +35,58 @@ export default function LoginPage() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-    >
-      <div>
-        <input
-          placeholder="Email"
-          {...register("email")}
-        />
+    <div className="min-h-screen flex items-center justify-center bg-muted/40">
+      <Card className="w-full max-w-md shadow-lg">
+        <CardHeader className="space-y-1">
+          <CardTitle className="text-2xl text-center">
+            Welcome Back
+          </CardTitle>
+        </CardHeader>
 
-        <p>{errors.email?.message}</p>
-      </div>
+        <CardContent>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
-      <div>
-        <input
-          type="password"
-          placeholder="Password"
-          {...register("password")}
-        />
+            {/* Email */}
+            <div className="space-y-2">
+              <Label>Email</Label>
+              <Input
+                placeholder="Enter your email"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-sm text-red-500">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-        <p>{errors.password?.message}</p>
-      </div>
+            {/* Password */}
+            <div className="space-y-2">
+              <Label>Password</Label>
+              <Input
+                type="password"
+                placeholder="Enter your password"
+                {...register("password")}
+              />
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
+            </div>
 
-      <button
-        type="submit"
-        disabled={loginMutation.isPending}
-      >
-        {loginMutation.isPending
-          ? "Loading..."
-          : "Login"}
-      </button>
-    </form>
+            {/* Button */}
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loginMutation.isPending}
+            >
+              {loginMutation.isPending ? "Loading..." : "Login"}
+            </Button>
+
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   )
 }
