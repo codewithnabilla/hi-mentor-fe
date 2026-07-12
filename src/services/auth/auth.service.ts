@@ -1,3 +1,4 @@
+import { ENDPOINTS } from "@/constants/endpoint";
 import api from "../api";
 
 export interface LoginPayload {
@@ -8,18 +9,16 @@ export interface LoginPayload {
 export const login = async (
     payload: LoginPayload
 ) => {
-    const response = await api.post("/login", payload)
+    const response = await api.post(ENDPOINTS.AUTH.LOGIN, payload);
     return response.data
 }
 
 export const me = async () => {
-    const response = await api.get("/me");
-
-    return response.data;
+  const response = await api.get(ENDPOINTS.AUTH.ME);
+  return response.data;
 };
 
 export const logout = async () => {
-    const response = await api.post("/logout");
-
-    return response.data;
+  const response = await api.post(ENDPOINTS.AUTH.LOGOUT);
+  return response.data;
 };
