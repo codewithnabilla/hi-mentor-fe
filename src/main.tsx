@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')!).render(
   <QueryClientProvider client={queryClient}>
-    <Toaster richColors />
+    <Toaster richColors position="top-center"/>
     <RouterProvider router={router} />
   </QueryClientProvider>,
 )
