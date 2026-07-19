@@ -11,6 +11,7 @@ import {
     Calendar,
     FileBarChart2,
     Folder,
+    ShieldCheck,
 } from "lucide-react";
 
 export const menuIcons = {
@@ -26,4 +27,5 @@ export const menuIcons = {
     CalendarMonth: Calendar,
     Assessment: FileBarChart2,
     Folder,
+    Permission: ShieldCheck
 };
