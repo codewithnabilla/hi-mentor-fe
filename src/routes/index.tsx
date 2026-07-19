@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/auth/LoginPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ProtectedRoute from "./ProtectedRoute";
+import MenuPage from "@/pages/menu/MenuPage";
 
 export const router = createBrowserRouter([
     {
@@ -14,6 +15,14 @@ export const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <DashboardPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/menus",
+        element: (
+            <ProtectedRoute>
+                <MenuPage />
             </ProtectedRoute>
         ),
     },

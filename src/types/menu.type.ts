@@ -9,3 +9,8 @@ export interface Menu {
     is_active: boolean;
     children: Menu[];
 }
+
+export type MenuPayload = Omit<
+    Menu,
+    "uuid" | "children"
+>;
