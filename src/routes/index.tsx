@@ -4,6 +4,7 @@ import LoginPage from "../pages/auth/LoginPage";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import ProtectedRoute from "./ProtectedRoute";
 import MenuPage from "@/pages/menu/MenuPage";
+import PermissionPage from "@/pages/permission/PermissionPage";
 
 export const router = createBrowserRouter([
     {
@@ -23,6 +24,14 @@ export const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <MenuPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/permissions",
+        element: (
+            <ProtectedRoute>
+                <PermissionPage />
             </ProtectedRoute>
         ),
     },

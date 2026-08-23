@@ -6,7 +6,8 @@ export const ENDPOINTS = {
   },
 
   MASTER: {
-    MENU: "/menus"
+    MENU: "/menus",
+    PERMISSION: "/permissions"
   }
 
 
