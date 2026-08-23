@@ -2,15 +2,15 @@ import { useForm } from "react-hook-form";
 import { useLogin } from "../../hooks/useLogin";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../../schemas/auth.schema";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 
-
 export default function LoginPage() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   if (token) {
     return <Navigate to="/dashboard" replace />;
@@ -84,6 +84,14 @@ export default function LoginPage() {
               {loginMutation.isPending ? "Loading..." : "Login"}
             </Button>
 
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full"
+              onClick={() => navigate("/register")}
+            >
+              Don&apos;t have an account? Register
+            </Button>
           </form>
         </CardContent>
       </Card>

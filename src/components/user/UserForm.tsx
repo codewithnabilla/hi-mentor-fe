@@ -79,7 +79,7 @@ export default function UserForm({
     <AppDialog
       open={open}
       onClose={handleClose}
-      title={isEdit ? "Edit Permission" : "Create Permission"}
+      title={isEdit ? "Edit User" : "Create User"}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <FormInput

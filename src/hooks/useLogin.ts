@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query"
-import { login } from "../services/auth/auth.service"
+import { login, register } from "../services/auth/auth.service"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom";
 
@@ -24,3 +24,24 @@ export const useLogin = () => {
         },
     })
 }
+
+export const useRegister = () => {
+    const navigate = useNavigate();
+
+    return useMutation({
+        mutationFn: register,
+
+        onSuccess: (data) => {
+            if (data?.token) {
+                localStorage.setItem("token", data.token);
+            }
+
+            toast.success(data?.message ?? "Registration successful.");
+            navigate(data?.token ? "/dashboard" : "/");
+        },
+
+        onError: () => {
+            toast.error("Registration failed. Please check your form.");
+        },
+    });
+};
