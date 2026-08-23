@@ -5,6 +5,7 @@ import DashboardPage from "../pages/dashboard/DashboardPage";
 import ProtectedRoute from "./ProtectedRoute";
 import MenuPage from "@/pages/menu/MenuPage";
 import PermissionPage from "@/pages/permission/PermissionPage";
+import UserPage from "@/pages/user/UserPage";
 
 export const router = createBrowserRouter([
     {
@@ -32,6 +33,14 @@ export const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <PermissionPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/users",
+        element: (
+            <ProtectedRoute>
+                <UserPage />
             </ProtectedRoute>
         ),
     },
