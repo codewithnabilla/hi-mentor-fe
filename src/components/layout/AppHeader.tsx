@@ -1,7 +1,9 @@
 import {
     Bell,
     CircleHelp,
-    Menu,
+    LogOut,
+    PanelLeftClose,
+    PanelLeftOpen,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +11,30 @@ import {
     AvatarFallback,
 } from "@/components/ui/avatar";
 import { useLogout } from "@/hooks/useLogout";
+import { useMe } from "@/hooks/useLogin";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-export default function AppHeader() {
+interface AppHeaderProps {
+    isSidebarOpen: boolean;
+    onToggleSidebar: () => void;
+}
+
+export default function AppHeader({ isSidebarOpen, onToggleSidebar }: AppHeaderProps) {
     const { mutate: logout } = useLogout();
+    const { data: meData } = useMe();
+    const userName = meData?.user?.name ?? meData?.name ?? "User";
+    const initials = userName
+        .trim()
+        .split(/\s+/)
+        .map((part: string) => part[0])
+        .slice(0, 2)
+        .join("")
+        .toUpperCase() || "U";
 
     return (
         <header className="h-16 bg-white border-b px-6 flex items-center justify-between">
@@ -20,8 +43,10 @@ export default function AppHeader() {
             <Button
                 variant="ghost"
                 size="icon"
+                onClick={onToggleSidebar}
+                aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
             >
-                <Menu className="h-5 w-5" />
+                {isSidebarOpen ? <PanelLeftClose className="h-5 w-5" /> : <PanelLeftOpen className="h-5 w-5" />}
             </Button>
 
             {/* Right */}
@@ -47,12 +72,32 @@ export default function AppHeader() {
                     </span>
                 </div>
 
-                <Avatar
-                    className="cursor-pointer"
-                    onClick={() => logout()}
-                >
-                    <AvatarFallback>T</AvatarFallback>
-                </Avatar>
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button
+                            variant="ghost"
+                            className="h-9 w-9 rounded-full p-0"
+                        >
+                            <Avatar className="h-9 w-9 cursor-pointer">
+                                <AvatarFallback>{initials}</AvatarFallback>
+                            </Avatar>
+                        </Button>
+                    </DropdownMenuTrigger>
+
+                    <DropdownMenuContent align="end" className="w-52">
+                        <div className="px-2 py-1.5 text-sm font-medium text-muted-foreground">
+                            {userName}
+                        </div>
+
+                        <DropdownMenuItem
+                            className="text-destructive focus:text-destructive"
+                            onClick={() => logout()}
+                        >
+                            <LogOut className="mr-2 h-4 w-4" />
+                            Logout
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
 
             </div>
         </header>

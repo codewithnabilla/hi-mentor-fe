@@ -1,7 +1,19 @@
-import { useMutation } from "@tanstack/react-query"
-import { login, register } from "../services/auth/auth.service"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { login, me, register } from "../services/auth/auth.service"
 import { toast } from "sonner"
 import { useNavigate } from "react-router-dom";
+
+export const useMe = () => {
+    return useQuery({
+        queryKey: ["me"],
+        queryFn: me,
+        staleTime: Infinity,
+        gcTime: Infinity,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
+    });
+};
 
 export const useLogin = () => {
     const navigate = useNavigate();
