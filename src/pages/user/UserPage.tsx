@@ -1,5 +1,5 @@
 import AppLayout from "@/components/layout/AppLayout";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UserForm from "@/components/user/UserForm";
 import UserTable from "@/components/user/UserTable";
 import { useDeleteUser, useUsers } from "@/hooks/useUser";
@@ -43,11 +43,11 @@ export default function UserPage() {
   return (
     <AppLayout>
       <Card>
-        {/* <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle>Permission Management</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle>User Management</CardTitle>
 
-          <Button onClick={handleCreate}>Add Permission</Button>
-        </CardHeader> */}
+          {/* <Button onClick={handleCreate}>Add Permission</Button> */}
+        </CardHeader>
 
         <CardContent>
           <UserTable

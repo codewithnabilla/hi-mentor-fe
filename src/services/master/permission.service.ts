@@ -8,6 +8,14 @@ export const getPermissions = async (page = 1) => {
   return data;
 }
 
+export const getAllPermissions = async () => {
+  const { data } = await api.get(ENDPOINTS.MASTER.PERMISSION, {
+    params: { per_page: 1000 },
+  });
+
+  return data;
+};
+
 export const getPermission = async (uuid: string) => {
   const { data } = await api.get(`${ENDPOINTS.MASTER.PERMISSION}/${uuid}`);
   return data;

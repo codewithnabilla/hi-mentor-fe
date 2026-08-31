@@ -1,6 +1,7 @@
 import {
   createPermission,
   deletePermission,
+  getAllPermissions,
   getPermission,
   getPermissions,
   updatePermission,
@@ -27,6 +28,18 @@ export const usePermission = (uuid: string) => {
     queryKey: [...PERMISSION_QUERY_KEY, uuid],
     queryFn: () => getPermission(uuid),
     enabled: !!uuid,
+  });
+};
+
+export const useAllPermissions = () => {
+  return useQuery({
+    queryKey: [...PERMISSION_QUERY_KEY, "all"],
+    queryFn: getAllPermissions,
+    staleTime: Infinity,
+    gcTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 };
 
