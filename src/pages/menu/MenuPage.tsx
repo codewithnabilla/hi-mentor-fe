@@ -4,12 +4,14 @@ import MenuTable from "@/components/menu/MenuTable";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeleteMenu, useMenus } from "@/hooks/useMenu";
+import { useCan } from "@/hooks/useAuthorization";
 import type { Menu } from "@/types/menu.type";
 import { useState } from "react";
 
 export default function MenuPage() {
   const { data, isLoading } = useMenus()
   const deleteMenu = useDeleteMenu()
+  const can = useCan();
 
   const [open, setOpen] = useState(false)
   const [selectedMenu, setSelectedMenu] = useState<Menu | undefined>()
@@ -42,9 +44,7 @@ export default function MenuPage() {
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Menu Management</CardTitle>
 
-          <Button onClick={handleCreate}>
-            Add Menu
-          </Button>
+          {can("create-menu") && <Button onClick={handleCreate}>Add Menu</Button>}
         </CardHeader>
 
         <CardContent>
@@ -53,6 +53,8 @@ export default function MenuPage() {
             loading={isLoading}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            canUpdate={can("update-menu")}
+            canDelete={can("delete-menu")}
           />
         </CardContent>
       </Card>

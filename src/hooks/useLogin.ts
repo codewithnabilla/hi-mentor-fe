@@ -7,11 +7,12 @@ export const useMe = () => {
     return useQuery({
         queryKey: ["me"],
         queryFn: me,
-        staleTime: Infinity,
+        staleTime: 15_000,
         gcTime: Infinity,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
+        refetchOnMount: true,
+        refetchOnWindowFocus: true,
+        refetchInterval: 15_000,
+        enabled: !!localStorage.getItem("token"),
     });
 };
 

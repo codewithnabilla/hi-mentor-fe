@@ -8,6 +8,8 @@ import { Badge } from "../ui/badge";
 interface MenuRowProps {
   menu: Menu
   level: number
+  canUpdate: boolean
+  canDelete: boolean
   onEdit: (menu: Menu) => void
   onDelete: (menu: Menu) => void
 }
@@ -17,13 +19,17 @@ interface MenuTableProps {
   loading?: boolean;
   onEdit: (menu: Menu) => void;
   onDelete: (menu: Menu) => void;
+  canUpdate: boolean;
+  canDelete: boolean;
 }
 
 function MenuRow({
   menu,
   level,
   onEdit,
-  onDelete
+  onDelete,
+  canUpdate,
+  canDelete,
 }: MenuRowProps) {
   return (
     <>
@@ -70,18 +76,18 @@ function MenuRow({
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end">
-              <DropdownMenuItem
+              {canUpdate && <DropdownMenuItem
                 onClick={() => onEdit(menu)}
               >
                 Edit
-              </DropdownMenuItem>
+              </DropdownMenuItem>}
 
-              <DropdownMenuItem
+              {canDelete && <DropdownMenuItem
                 className="text-destructive"
                 onClick={() => onDelete(menu)}
               >
                 Delete
-              </DropdownMenuItem>
+              </DropdownMenuItem>}
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>
@@ -93,6 +99,8 @@ function MenuRow({
           level={level + 1}
           onEdit={onEdit}
           onDelete={onDelete}
+          canUpdate={canUpdate}
+          canDelete={canDelete}
         />
       ))}
     </>
@@ -105,6 +113,8 @@ export default function MenuTable({
   loading = false,
   onEdit,
   onDelete,
+  canUpdate,
+  canDelete,
 }: MenuTableProps) {
   if (loading) {
     return (
@@ -154,6 +164,8 @@ export default function MenuTable({
             level={0}
             onEdit={onEdit}
             onDelete={onDelete}
+            canUpdate={canUpdate}
+            canDelete={canDelete}
           />
         ))}
       </TableBody>

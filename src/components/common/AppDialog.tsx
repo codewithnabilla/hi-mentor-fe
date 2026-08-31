@@ -6,6 +6,7 @@ interface AppDialogProps {
   onClose: () => void;
   title: string;
   children: ReactNode;
+  className?: string;
 }
 
 
@@ -13,7 +14,8 @@ export default function AppDialog({
   open,
   onClose,
   title,
-  children
+  children,
+  className,
 }: AppDialogProps) {
   return (
     <Dialog
@@ -23,7 +25,7 @@ export default function AppDialog({
       }}
     >
 
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className={className ?? "sm:max-w-lg"}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>

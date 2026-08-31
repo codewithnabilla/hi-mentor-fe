@@ -4,6 +4,7 @@ import PermissionTable from "@/components/permission/PermissionTable";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeletePermission, usePermissions } from "@/hooks/usePermission";
+import { useCan } from "@/hooks/useAuthorization";
 import type { Permission } from "@/types/permission.type";
 import { useState } from "react";
 
@@ -11,6 +12,7 @@ export default function PermissionPage() {
   const [page, setPage] = useState(1);
   const { data, isLoading } = usePermissions(page);
   const deletePermission = useDeletePermission();
+  const can = useCan();
 
   const [open, setOpen] = useState(false);
   const [selectedPermission, setSelectedPermission] = useState<Permission | undefined>();
@@ -47,7 +49,7 @@ export default function PermissionPage() {
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Permission Management</CardTitle>
 
-          <Button onClick={handleCreate}>Add Permission</Button>
+          {can("create-permission") && <Button onClick={handleCreate}>Add Permission</Button>}
         </CardHeader>
 
         <CardContent>
@@ -59,6 +61,8 @@ export default function PermissionPage() {
             loading={isLoading}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            canUpdate={can("update-permission")}
+            canDelete={can("delete-permission")}
           />
         </CardContent>
       </Card>

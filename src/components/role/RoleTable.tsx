@@ -19,6 +19,9 @@ interface RoleTableProps {
   onEdit: (role: Role) => void;
   onDelete: (role: Role) => void;
   onAssignPermissions: (role: Role) => void;
+  canUpdate: boolean;
+  canDelete: boolean;
+  canAssignPermissions: boolean;
 }
 
 const normalizeLabel = (label: string) =>
@@ -35,6 +38,9 @@ export default function RoleTable({
   onEdit,
   onDelete,
   onAssignPermissions,
+  canUpdate,
+  canDelete,
+  canAssignPermissions,
 }: RoleTableProps) {
   if (loading) {
     return <div className="py-8 text-center text-muted-foreground">Loading roles...</div>;
@@ -80,13 +86,13 @@ export default function RoleTable({
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onAssignPermissions(role)}>
+                    {canAssignPermissions && <DropdownMenuItem onClick={() => onAssignPermissions(role)}>
                       Assign Permission
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => onEdit(role)}>Edit</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive" onClick={() => onDelete(role)}>
+                    </DropdownMenuItem>}
+                    {canUpdate && <DropdownMenuItem onClick={() => onEdit(role)}>Edit</DropdownMenuItem>}
+                    {canDelete && <DropdownMenuItem className="text-destructive" onClick={() => onDelete(role)}>
                       Delete
-                    </DropdownMenuItem>
+                    </DropdownMenuItem>}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

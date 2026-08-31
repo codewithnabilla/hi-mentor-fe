@@ -32,13 +32,14 @@ export default function RolePermissionDialog({
       delete: 3,
       view: 4,
       "view-any": 5,
-      approve: 6,
-      reject: 7,
-      restore: 8,
-      import: 9,
-      export: 10,
-      manage: 11,
-      list: 12,
+      menu: 6,
+      approve: 7,
+      reject: 8,
+      restore: 9,
+      import: 10,
+      export: 11,
+      manage: 12,
+      list: 13,
     };
 
     const normalizeAction = (name: string) => {
@@ -59,6 +60,13 @@ export default function RolePermissionDialog({
 
       const actionParts: string[] = [];
       const resourceParts: string[] = [];
+
+      if (parts[0] === "view" && parts[1] === "menu") {
+        return {
+          action: "menu",
+          resource: parts.slice(2).join("-") || "general",
+        };
+      }
 
       parts.forEach((part) => {
         if (keywords.includes(part)) {
@@ -147,9 +155,14 @@ export default function RolePermissionDialog({
   };
 
   return (
-    <AppDialog open={open} onClose={handleClose} title={role ? `Assign Permission to ${role.name}` : "Assign Permission"}>
+    <AppDialog
+      open={open}
+      onClose={handleClose}
+      title={role ? `Assign Permission to ${role.name}` : "Assign Permission"}
+      className="sm:max-w-5xl"
+    >
       <div className="space-y-4">
-        <div className="max-h-[480px] overflow-auto rounded-md border">
+        <div className="max-h-[min(65vh,640px)] overflow-auto rounded-md border">
           {isLoading ? (
             <div className="p-4 text-sm text-muted-foreground">Loading permissions...</div>
           ) : permissions.length === 0 ? (
@@ -158,9 +171,11 @@ export default function RolePermissionDialog({
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="min-w-[160px]">Module</TableHead>
+                    <TableHead className="sticky left-0 top-0 z-40 min-w-[200px] border-r bg-popover">
+                      Module
+                    </TableHead>
                   {groupedPermissions.columns.map((column) => (
-                    <TableHead key={column} className="min-w-[120px] text-center uppercase">
+                    <TableHead key={column} className="sticky top-0 z-30 min-w-[120px] bg-popover text-center uppercase">
                       {column.replace(/-/g, " ")}
                     </TableHead>
                   ))}
@@ -170,7 +185,9 @@ export default function RolePermissionDialog({
               <TableBody>
                 {groupedPermissions.rows.map((row) => (
                   <TableRow key={row.resource}>
-                    <TableCell className="font-medium">{row.label}</TableCell>
+                    <TableCell className="sticky left-0 z-20 border-r bg-popover font-medium">
+                      {row.label}
+                    </TableCell>
 
                     {groupedPermissions.columns.map((column) => {
                       const permission = row.actions.get(column);
@@ -180,6 +197,7 @@ export default function RolePermissionDialog({
                         <TableCell key={`${row.resource}-${column}`} className="text-center">
                           {permission ? (
                             <Checkbox
+                              className="mx-auto"
                               checked={checked}
                               onCheckedChange={() => togglePermission(permission.uuid)}
                             />

@@ -102,6 +102,7 @@ export const useAssignPermissionsToRole = () => {
       queryClient.invalidateQueries({
         queryKey: ROLE_QUERY_KEY,
       });
+      queryClient.invalidateQueries({ queryKey: ["me"] });
     },
     onError: () => {
       toast.error("Failed to assign permissions.");

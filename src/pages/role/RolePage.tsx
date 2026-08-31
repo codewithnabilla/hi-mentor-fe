@@ -5,6 +5,7 @@ import RoleTable from "@/components/role/RoleTable";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeleteRole, useRoles } from "@/hooks/useRole";
+import { useCan, useCanAny } from "@/hooks/useAuthorization";
 import type { Role } from "@/types/role.type";
 import { useState } from "react";
 
@@ -12,6 +13,8 @@ export default function RolePage() {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useRoles(page);
   const deleteRole = useDeleteRole();
+  const can = useCan();
+  const canAny = useCanAny();
 
   const [open, setOpen] = useState(false);
   const [openPermissionDialog, setOpenPermissionDialog] = useState(false);
@@ -58,7 +61,7 @@ export default function RolePage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Role Management</CardTitle>
-          <Button onClick={handleCreate}>Add Role</Button>
+          {can("create-role") && <Button onClick={handleCreate}>Add Role</Button>}
         </CardHeader>
 
         <CardContent>
@@ -71,6 +74,9 @@ export default function RolePage() {
             onEdit={handleEdit}
             onDelete={handleDelete}
             onAssignPermissions={handleAssignPermissions}
+            canUpdate={can("update-role")}
+            canDelete={can("delete-role")}
+            canAssignPermissions={canAny("manage-role", "update-role")}
           />
         </CardContent>
       </Card>

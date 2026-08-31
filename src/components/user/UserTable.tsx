@@ -12,6 +12,8 @@ interface UserTableProps {
   onPageChange?: (page: number) => void;
   onEdit: (user: User) => void;
   onDelete: (user: User) => void;
+  canUpdate: boolean;
+  canDelete: boolean;
 }
 
 const normalizeLabel = (label: string) =>
@@ -27,6 +29,8 @@ export default function UserTable({
   onPageChange,
   onEdit,
   onDelete,
+  canUpdate,
+  canDelete,
 }: UserTableProps) {
   if (loading) {
     return <div className="py-8 text-center text-muted-foreground">Loading users...</div>;
@@ -61,10 +65,10 @@ export default function UserTable({
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onEdit(user)}>Edit</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive" onClick={() => onDelete(user)}>
+                    {canUpdate && <DropdownMenuItem onClick={() => onEdit(user)}>Edit</DropdownMenuItem>}
+                    {canDelete && <DropdownMenuItem className="text-destructive" onClick={() => onDelete(user)}>
                       Delete
-                    </DropdownMenuItem>
+                    </DropdownMenuItem>}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

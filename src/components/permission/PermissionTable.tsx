@@ -12,6 +12,8 @@ interface PermissionTableProps {
   onPageChange?: (page: number) => void;
   onEdit: (permission: Permission) => void;
   onDelete: (permission: Permission) => void;
+  canUpdate: boolean;
+  canDelete: boolean;
 }
 
 const normalizeLabel = (label: string) =>
@@ -27,6 +29,8 @@ export default function PermissionTable({
   onPageChange,
   onEdit,
   onDelete,
+  canUpdate,
+  canDelete,
 }: PermissionTableProps) {
   if (loading) {
     return <div className="py-8 text-center text-muted-foreground">Loading permissions...</div>;
@@ -63,10 +67,10 @@ export default function PermissionTable({
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem onClick={() => onEdit(permission)}>Edit</DropdownMenuItem>
-                    <DropdownMenuItem className="text-destructive" onClick={() => onDelete(permission)}>
+                    {canUpdate && <DropdownMenuItem onClick={() => onEdit(permission)}>Edit</DropdownMenuItem>}
+                    {canDelete && <DropdownMenuItem className="text-destructive" onClick={() => onDelete(permission)}>
                       Delete
-                    </DropdownMenuItem>
+                    </DropdownMenuItem>}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>

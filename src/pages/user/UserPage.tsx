@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UserForm from "@/components/user/UserForm";
 import UserTable from "@/components/user/UserTable";
 import { useDeleteUser, useUsers } from "@/hooks/useUser";
+import { useCan } from "@/hooks/useAuthorization";
 import type { User } from "@/types/user.type";
 import { useState } from "react";
 
@@ -10,6 +11,7 @@ export default function UserPage() {
   const [page, setPage] = useState(1);
   const { data, isLoading } = useUsers(page);
   const deleteUser = useDeleteUser();
+  const can = useCan();
 
   const [open, setOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | undefined>();
@@ -58,6 +60,8 @@ export default function UserPage() {
             loading={isLoading}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            canUpdate={can("update-user")}
+            canDelete={can("delete-user")}
           />
         </CardContent>
       </Card>
