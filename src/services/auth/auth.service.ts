@@ -9,6 +9,8 @@ export interface LoginPayload {
 export interface RegisterPayload {
   name: string;
   email: string;
+  role?: string;
+  roles?: string[];
   password: string;
   password_confirmation: string;
 }

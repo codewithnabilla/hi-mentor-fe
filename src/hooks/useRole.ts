@@ -2,6 +2,7 @@ import {
   assignPermissionsToRole,
   createRole,
   deleteRole,
+  getAllRoles,
   getRole,
   getRoles,
   updateRole,
@@ -11,10 +12,22 @@ import { toast } from "sonner";
 
 const ROLE_QUERY_KEY = ["roles"];
 
-export const useRoles = () => {
+export const useRoles = (page = 1) => {
   return useQuery({
-    queryKey: ROLE_QUERY_KEY,
-    queryFn: getRoles,
+    queryKey: [...ROLE_QUERY_KEY, page],
+    queryFn: () => getRoles(page),
+    staleTime: Infinity,
+    gcTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+};
+
+export const useAllRoles = () => {
+  return useQuery({
+    queryKey: [...ROLE_QUERY_KEY, "all"],
+    queryFn: getAllRoles,
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,

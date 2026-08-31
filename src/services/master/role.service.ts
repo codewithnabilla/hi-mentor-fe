@@ -1,8 +1,17 @@
 import { ENDPOINTS } from "@/constants/endpoint";
 import api from "../api";
 
-export const getRoles = async () => {
-  const { data } = await api.get(ENDPOINTS.MASTER.ROLE);
+export const getRoles = async (page = 1) => {
+  const { data } = await api.get(ENDPOINTS.MASTER.ROLE, {
+    params: { page },
+  });
+  return data;
+};
+
+export const getAllRoles = async () => {
+  const { data } = await api.get(ENDPOINTS.MASTER.ROLE, {
+    params: { per_page: 1000 },
+  });
   return data;
 };
 

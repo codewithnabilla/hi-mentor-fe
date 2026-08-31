@@ -1,7 +1,15 @@
+export interface UserRole {
+    uuid: string;
+    name: string;
+    guard_name?: string;
+    description?: string | null;
+}
+
 export interface User {
     uuid: string;
     name: string;
     email: string;
+    roles?: UserRole[];
     created_at?: string;
     updated_at?: string;
 }

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useRegister } from "@/hooks/useLogin";
 import { registerSchema } from "@/schemas/auth.schema";
 
@@ -21,21 +22,30 @@ export default function RegisterPage() {
     const {
         register,
         handleSubmit,
+        setValue,
+        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(registerSchema),
         defaultValues: {
             name: "",
             email: "",
+            role: "Mentor",
             password: "",
             password_confirmation: "",
         },
     });
 
+    const selectedRole = watch("role");
+
     const onSubmit = (data: any) => {
+        const normalizedRole = data.role;
+
         registerMutation.mutate({
             name: data.name,
             email: data.email,
+            role: normalizedRole,
+            roles: [normalizedRole],
             password: data.password,
             password_confirmation: data.password_confirmation,
         });
@@ -63,6 +73,25 @@ export default function RegisterPage() {
                             <Input placeholder="Enter your email" {...register("email")} />
                             {errors.email && (
                                 <p className="text-sm text-red-500">{String(errors.email.message)}</p>
+                            )}
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label>Role</Label>
+                            <Select
+                                value={selectedRole}
+                                onValueChange={(value) => setValue("role", value, { shouldValidate: true })}
+                            >
+                                <SelectTrigger className="w-full">
+                                    <SelectValue placeholder="Select role" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="Mentor">Mentor</SelectItem>
+                                    <SelectItem value="Student">Student</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            {errors.role && (
+                                <p className="text-sm text-red-500">{String(errors.role.message)}</p>
                             )}
                         </div>
 

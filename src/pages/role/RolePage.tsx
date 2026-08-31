@@ -9,7 +9,8 @@ import type { Role } from "@/types/role.type";
 import { useState } from "react";
 
 export default function RolePage() {
-  const { data, isLoading } = useRoles();
+  const [page, setPage] = useState(1);
+  const { data, isLoading } = useRoles(page);
   const deleteRole = useDeleteRole();
 
   const [open, setOpen] = useState(false);
@@ -47,6 +48,11 @@ export default function RolePage() {
     setSelectedRole(undefined);
   };
 
+  const handlePageChange = (nextPage: number) => {
+    if (!nextPage || nextPage < 1) return;
+    setPage(nextPage);
+  };
+
   return (
     <AppLayout>
       <Card>
@@ -58,6 +64,9 @@ export default function RolePage() {
         <CardContent>
           <RoleTable
             roles={data?.data ?? []}
+            links={data?.meta?.links ?? []}
+            currentPage={data?.meta?.current_page ?? page}
+            onPageChange={handlePageChange}
             loading={isLoading}
             onEdit={handleEdit}
             onDelete={handleDelete}

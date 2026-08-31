@@ -10,6 +10,7 @@ export const userSchema = yup.object({
     .required("Email is required")
     .email("Please enter a valid email")
     .max(255, "Email cannot exceed 255 characters"),
+  role_ids: yup.array().of(yup.string().required()).default([]),
   //   password: yup
   //     .string()
   //     .required("Password is required")

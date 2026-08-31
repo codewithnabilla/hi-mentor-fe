@@ -26,6 +26,11 @@ export const registerSchema = yup
             .email("Invalid email")
             .max(255, "Email cannot exceed 255 characters"),
 
+        role: yup
+            .string()
+            .required("Please select a role")
+            .oneOf(["Mentor", "Student"], "Role must be Mentor or Student"),
+
         password: yup
             .string()
             .required("Password is required")
