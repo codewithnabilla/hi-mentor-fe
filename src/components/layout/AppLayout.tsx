@@ -10,7 +10,7 @@ export default function AppLayout({ children }: AppLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="min-h-screen flex bg-muted/40">
+    <div className="min-h-screen flex bg-background text-foreground">
       <AppSidebar isOpen={isSidebarOpen} />
 
       <div className="flex-1 flex flex-col min-w-0">

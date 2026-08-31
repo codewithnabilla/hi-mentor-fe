@@ -12,30 +12,30 @@
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+    color-scheme: light;
   --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-
-  --background: oklch(1 0 0);
-
-  --foreground: oklch(0.145 0 0);
-
-  --card: oklch(1 0 0);
-
-  --card-foreground: oklch(0.145 0 0);
+    --foreground: #18231f;
+    --card: #ffffff;
+    --card-foreground: #18231f;
+    --popover: #ffffff;
+    --popover-foreground: #18231f;
+    --primary: #183d32;
+    --primary-foreground: #ffffff;
+    --secondary: #d6e7dc;
+    --secondary-foreground: #183d32;
+    --muted: #eef3ef;
+    --muted-foreground: #607168;
+    --accent-foreground: #183d32;
+    --input: #d9e1db;
+    --ring: #d18a3b;
+    --sidebar: #ffffff;
+    --sidebar-foreground: #18231f;
+    --sidebar-primary: #183d32;
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: #eef3ef;
+    --sidebar-accent-foreground: #183d32;
+    --sidebar-border: #d9e1db;
+    --sidebar-ring: #d18a3b;
 
   --popover: oklch(1 0 0);
 

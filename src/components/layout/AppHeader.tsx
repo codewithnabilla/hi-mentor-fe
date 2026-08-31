@@ -37,7 +37,7 @@ export default function AppHeader({ isSidebarOpen, onToggleSidebar }: AppHeaderP
         .toUpperCase() || "U";
 
     return (
-        <header className="h-16 bg-white border-b px-6 flex items-center justify-between">
+        <header className="flex h-16 items-center justify-between border-b border-[#d9e1db] bg-white/90 px-6 backdrop-blur">
 
             {/* Left */}
             <Button
@@ -51,7 +51,6 @@ export default function AppHeader({ isSidebarOpen, onToggleSidebar }: AppHeaderP
 
             {/* Right */}
             <div className="flex items-center gap-3">
-
                 <Button
                     variant="ghost"
                     size="icon"

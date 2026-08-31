@@ -24,7 +24,7 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
   };
 
   return (
-    <aside className={`bg-white border-r flex flex-col transition-all duration-200 ${isOpen ? "w-64" : "w-20"}`}>
+    <aside className={`flex flex-col border-r border-[#d9e1db] bg-white transition-all duration-200 ${isOpen ? "w-64" : "w-20"}`}>
       {/* Logo */}
       <div className={`h-16 flex items-center border-b ${isOpen ? "px-6" : "px-3 justify-center"}`}>
         <div className={isOpen ? "block" : "hidden"}>
