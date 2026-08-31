@@ -1,4 +1,5 @@
 import AppLayout from "@/components/layout/AppLayout";
+import SearchBar from "@/components/common/SearchBar";
 import RoleForm from "@/components/role/RoleForm";
 import RolePermissionDialog from "@/components/role/RolePermissionDialog";
 import RoleTable from "@/components/role/RoleTable";
@@ -11,7 +12,9 @@ import { useState } from "react";
 
 export default function RolePage() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useRoles(page);
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = useRoles(page, search);
   const deleteRole = useDeleteRole();
   const can = useCan();
   const canAny = useCanAny();
@@ -56,12 +59,25 @@ export default function RolePage() {
     setPage(nextPage);
   };
 
+  const handleSearch = (nextSearch: string) => {
+    setSearch(nextSearch);
+    setPage(1);
+  };
+
   return (
     <AppLayout>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <CardTitle>Role Management</CardTitle>
-          {can("create-role") && <Button onClick={handleCreate}>Add Role</Button>}
+          <div className="flex w-full max-w-md items-center gap-3 md:ml-auto">
+            <SearchBar
+              value={searchInput}
+              onChange={setSearchInput}
+              onSearch={handleSearch}
+              placeholder="Search role..."
+            />
+            {can("create-role") && <Button onClick={handleCreate}>Add Role</Button>}
+          </div>
         </CardHeader>
 
         <CardContent>

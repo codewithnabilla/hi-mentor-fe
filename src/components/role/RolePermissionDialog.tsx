@@ -26,22 +26,6 @@ export default function RolePermissionDialog({
   const [selectedPermissionIds, setSelectedPermissionIds] = useState<string[]>([]);
 
   const groupedPermissions = useMemo(() => {
-    const actionOrder: Record<string, number> = {
-      create: 1,
-      update: 2,
-      delete: 3,
-      view: 4,
-      "view-any": 5,
-      menu: 6,
-      approve: 7,
-      reject: 8,
-      restore: 9,
-      import: 10,
-      export: 11,
-      manage: 12,
-      list: 13,
-    };
-
     const normalizeAction = (name: string) => {
       const parts = name.toLowerCase().split("-");
       const keywords = [
@@ -62,9 +46,11 @@ export default function RolePermissionDialog({
       const resourceParts: string[] = [];
 
       if (parts[0] === "view" && parts[1] === "menu") {
+        const menuResource = parts.slice(2).join("-");
+
         return {
-          action: "menu",
-          resource: parts.slice(2).join("-") || "general",
+          action: "view",
+          resource: menuResource ? `menu-${menuResource}` : "menu",
         };
       }
 
@@ -89,11 +75,9 @@ export default function RolePermissionDialog({
     };
 
     const byGroup = new Map<string, Map<string, Permission>>();
-    const actionSet = new Set<string>();
 
     permissions.forEach((permission: Permission) => {
       const { action, resource } = normalizeAction(permission.name);
-      actionSet.add(action);
 
       if (!byGroup.has(resource)) {
         byGroup.set(resource, new Map());
@@ -102,16 +86,18 @@ export default function RolePermissionDialog({
       byGroup.get(resource)?.set(action, permission);
     });
 
-    const columns = Array.from(actionSet).sort((a, b) => {
-      const aScore = actionOrder[a] ?? 999;
-      const bScore = actionOrder[b] ?? 999;
-      return aScore - bScore || a.localeCompare(b);
-    });
+    const columns = ["create", "update", "delete", "view", "view-any"];
 
     const rows = Array.from(byGroup.entries()).map(([resource, actions]) => ({
       resource,
-      label: resource
-        .split("-")
+      label: resource.startsWith("menu-")
+        ? `${resource
+            .slice("menu-".length)
+            .split("-")
+            .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
+            .join(" ")} (Menu)`
+        : resource
+            .split("-")
         .map((segment) => segment.charAt(0).toUpperCase() + segment.slice(1))
         .join(" "),
       actions,

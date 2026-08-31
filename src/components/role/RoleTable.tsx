@@ -1,4 +1,5 @@
 import type { Role, RolePageLink } from "@/types/role.type";
+import AppLoader from "@/components/common/AppLoader";
 import { MoreHorizontal, ShieldCheck } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
@@ -43,7 +44,7 @@ export default function RoleTable({
   canAssignPermissions,
 }: RoleTableProps) {
   if (loading) {
-    return <div className="py-8 text-center text-muted-foreground">Loading roles...</div>;
+    return <AppLoader label="Loading roles..." />;
   }
 
   if (roles.length === 0) {

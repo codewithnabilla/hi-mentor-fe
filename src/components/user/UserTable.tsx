@@ -1,4 +1,5 @@
 import { Button } from "../ui/button";
+import AppLoader from "@/components/common/AppLoader";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
@@ -33,7 +34,7 @@ export default function UserTable({
   canDelete,
 }: UserTableProps) {
   if (loading) {
-    return <div className="py-8 text-center text-muted-foreground">Loading users...</div>;
+    return <AppLoader label="Loading users..." />;
   }
 
   if (users.length === 0) {

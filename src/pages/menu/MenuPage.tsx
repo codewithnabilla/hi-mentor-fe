@@ -1,4 +1,5 @@
 import AppLayout from "@/components/layout/AppLayout";
+import SearchBar from "@/components/common/SearchBar";
 import MenuForm from "@/components/menu/MenuForm";
 import MenuTable from "@/components/menu/MenuTable";
 import { Button } from "@/components/ui/button";
@@ -9,8 +10,10 @@ import type { Menu } from "@/types/menu.type";
 import { useState } from "react";
 
 export default function MenuPage() {
-  const { data, isLoading } = useMenus()
-  const deleteMenu = useDeleteMenu()
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = useMenus(search);
+  const deleteMenu = useDeleteMenu();
   const can = useCan();
 
   const [open, setOpen] = useState(false)
@@ -37,14 +40,25 @@ export default function MenuPage() {
     setSelectedMenu(undefined);
   };
 
+  const handleSearch = (nextSearch: string) => {
+    setSearch(nextSearch);
+  };
 
   return (
     <AppLayout>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <CardTitle>Menu Management</CardTitle>
 
-          {can("create-menu") && <Button onClick={handleCreate}>Add Menu</Button>}
+          <div className="flex w-full max-w-md items-center gap-3 md:ml-auto">
+            <SearchBar
+              value={searchInput}
+              onChange={setSearchInput}
+              onSearch={handleSearch}
+              placeholder="Search menu..."
+            />
+            {can("create-menu") && <Button onClick={handleCreate}>Add Menu</Button>}
+          </div>
         </CardHeader>
 
         <CardContent>

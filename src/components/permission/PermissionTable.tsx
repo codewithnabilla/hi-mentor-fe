@@ -1,5 +1,6 @@
 import type { Permission, PermissionPageLink } from "@/types/permission.type";
 import { Button } from "../ui/button";
+import AppLoader from "@/components/common/AppLoader";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
@@ -33,7 +34,7 @@ export default function PermissionTable({
   canDelete,
 }: PermissionTableProps) {
   if (loading) {
-    return <div className="py-8 text-center text-muted-foreground">Loading permissions...</div>;
+    return <AppLoader label="Loading permissions..." />;
   }
 
   if (permissions.length === 0) {

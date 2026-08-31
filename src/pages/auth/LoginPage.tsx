@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import AppLoader from "@/components/common/AppLoader";
 import { ArrowLeft, LogIn } from "lucide-react";
 
 type LoginFormValues = yup.InferType<typeof loginSchema>;
@@ -102,7 +103,14 @@ export default function LoginPage() {
               className="w-full bg-[#183d32] text-white hover:bg-[#285848]"
               disabled={loginMutation.isPending}
             >
-              {loginMutation.isPending ? "Loading..." : "Login"}
+              {loginMutation.isPending ? (
+                <span className="inline-flex items-center gap-2">
+                  <AppLoader size={16} label="" className="py-0" />
+                  <span>Loading...</span>
+                </span>
+              ) : (
+                "Login"
+              )}
             </Button>
 
             <Button

@@ -1,9 +1,12 @@
 import { ENDPOINTS } from "@/constants/endpoint"
 import api from "../api"
 
-export const getUsers = async (page = 1) => {
+export const getUsers = async (page = 1, search = "") => {
   const { data } = await api.get(ENDPOINTS.MASTER.USER, {
-    params: { page },
+    params: {
+      page,
+      search: search || undefined,
+    },
   });
   return data;
 }

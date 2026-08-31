@@ -1,16 +1,22 @@
 import { ENDPOINTS } from "@/constants/endpoint"
 import api from "../api"
 
-export const getPermissions = async (page = 1) => {
+export const getPermissions = async (page = 1, search = "") => {
   const { data } = await api.get(ENDPOINTS.MASTER.PERMISSION, {
-    params: { page },
+    params: {
+      page,
+      search: search || undefined,
+    },
   });
   return data;
 }
 
-export const getAllPermissions = async () => {
+export const getAllPermissions = async (search = "") => {
   const { data } = await api.get(ENDPOINTS.MASTER.PERMISSION, {
-    params: { per_page: 1000 },
+    params: {
+      per_page: 1000,
+      search: search || undefined,
+    },
   });
 
   return data;

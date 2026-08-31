@@ -9,10 +9,10 @@ import { toast } from "sonner";
 
 const USER_QUERY_KEY = ["users"];
 
-export const useUsers = (page = 1) => {
+export const useUsers = (page = 1, search = "") => {
   return useQuery({
-    queryKey: [...USER_QUERY_KEY, page],
-    queryFn: () => getUsers(page),
+    queryKey: [...USER_QUERY_KEY, page, search],
+    queryFn: () => getUsers(page, search),
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,

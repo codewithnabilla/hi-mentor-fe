@@ -5,10 +5,10 @@ import { toast } from "sonner";
 const MENU_QUERY_KEY = ["menus"];
 
 // get all
-export const useMenus = () => {
+export const useMenus = (search = "") => {
   return useQuery({
-    queryKey: MENU_QUERY_KEY,
-    queryFn: getMenus,
+    queryKey: [...MENU_QUERY_KEY, search],
+    queryFn: () => getMenus(search),
 
     // just fetch once
 

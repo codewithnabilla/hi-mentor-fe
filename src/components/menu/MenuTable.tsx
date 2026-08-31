@@ -2,6 +2,7 @@ import type { Menu } from "@/types/menu.type";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
+import AppLoader from "@/components/common/AppLoader";
 import { CornerDownRight, MoreHorizontal } from "lucide-react";
 import { Badge } from "../ui/badge";
 
@@ -117,11 +118,7 @@ export default function MenuTable({
   canDelete,
 }: MenuTableProps) {
   if (loading) {
-    return (
-      <div className="py-8 text-center text-muted-foreground">
-        Loading menus...
-      </div>
-    )
+    return <AppLoader label="Loading menus..." />;
   }
 
   if (menus.length === 0) {

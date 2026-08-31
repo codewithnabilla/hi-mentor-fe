@@ -11,10 +11,10 @@ import { toast } from "sonner";
 
 const PERMISSION_QUERY_KEY = ["permissions"];
 
-export const usePermissions = (page = 1) => {
+export const usePermissions = (page = 1, search = "") => {
   return useQuery({
-    queryKey: [...PERMISSION_QUERY_KEY, page],
-    queryFn: () => getPermissions(page),
+    queryKey: [...PERMISSION_QUERY_KEY, page, search],
+    queryFn: () => getPermissions(page, search),
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,
@@ -31,10 +31,10 @@ export const usePermission = (uuid: string) => {
   });
 };
 
-export const useAllPermissions = () => {
+export const useAllPermissions = (search = "") => {
   return useQuery({
-    queryKey: [...PERMISSION_QUERY_KEY, "all"],
-    queryFn: getAllPermissions,
+    queryKey: [...PERMISSION_QUERY_KEY, "all", search],
+    queryFn: () => getAllPermissions(search),
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,

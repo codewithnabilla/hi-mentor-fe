@@ -1,4 +1,5 @@
 import AppLayout from "@/components/layout/AppLayout";
+import SearchBar from "@/components/common/SearchBar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import UserForm from "@/components/user/UserForm";
 import UserTable from "@/components/user/UserTable";
@@ -9,7 +10,9 @@ import { useState } from "react";
 
 export default function UserPage() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useUsers(page);
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = useUsers(page, search);
   const deleteUser = useDeleteUser();
   const can = useCan();
 
@@ -42,13 +45,25 @@ export default function UserPage() {
     setPage(nextPage);
   };
 
+  const handleSearch = (nextSearch: string) => {
+    setSearch(nextSearch);
+    setPage(1);
+  };
+
   return (
     <AppLayout>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <CardTitle>User Management</CardTitle>
 
-          {/* <Button onClick={handleCreate}>Add Permission</Button> */}
+          <div className="flex w-full max-w-md items-center md:ml-auto">
+            <SearchBar
+              value={searchInput}
+              onChange={setSearchInput}
+              onSearch={handleSearch}
+              placeholder="Search user..."
+            />
+          </div>
         </CardHeader>
 
         <CardContent>

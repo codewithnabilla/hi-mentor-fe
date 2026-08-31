@@ -1,4 +1,5 @@
 import AppLayout from "@/components/layout/AppLayout";
+import SearchBar from "@/components/common/SearchBar";
 import PermissionForm from "@/components/permission/PermissionForm";
 import PermissionTable from "@/components/permission/PermissionTable";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,9 @@ import { useState } from "react";
 
 export default function PermissionPage() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = usePermissions(page);
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
+  const { data, isLoading } = usePermissions(page, search);
   const deletePermission = useDeletePermission();
   const can = useCan();
 
@@ -43,13 +46,26 @@ export default function PermissionPage() {
     setPage(nextPage);
   };
 
+  const handleSearch = (nextSearch: string) => {
+    setSearch(nextSearch);
+    setPage(1);
+  };
+
   return (
     <AppLayout>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
           <CardTitle>Permission Management</CardTitle>
 
-          {can("create-permission") && <Button onClick={handleCreate}>Add Permission</Button>}
+          <div className="flex w-full max-w-md items-center gap-3 md:ml-auto">
+            <SearchBar
+              value={searchInput}
+              onChange={setSearchInput}
+              onSearch={handleSearch}
+              placeholder="Search permission..."
+            />
+            {can("create-permission") && <Button onClick={handleCreate}>Add Permission</Button>}
+          </div>
         </CardHeader>
 
         <CardContent>

@@ -1,8 +1,12 @@
 import { ENDPOINTS } from "@/constants/endpoint"
 import api from "../api"
 
-export const getMenus = async () => {
-  const { data } = await api.get(ENDPOINTS.MASTER.MENU);
+export const getMenus = async (search = "") => {
+  const { data } = await api.get(ENDPOINTS.MASTER.MENU, {
+    params: {
+      search: search || undefined,
+    },
+  });
   return data;
 }
 

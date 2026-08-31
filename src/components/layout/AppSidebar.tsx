@@ -5,6 +5,7 @@ import { useMenus } from "@/hooks/useMenu";
 import type { Menu } from "@/types/menu.type";
 import { menuIcons } from "@/lib/menu-icons";
 import { useMe } from "@/hooks/useLogin";
+import AppLoader from "@/components/common/AppLoader";
 
 interface AppSidebarProps {
   isOpen: boolean;
@@ -47,9 +48,12 @@ export default function AppSidebar({ isOpen }: AppSidebarProps) {
       {/* Navigation */}
       <nav className="flex-1 overflow-y-auto p-2 space-y-1">
         {isLoading && (
-          <p className={`text-xs text-muted-foreground ${isOpen ? "px-2" : "text-center"}`}>
-            {isOpen ? "Loading..." : "..."}
-          </p>
+          <AppLoader
+            label={isOpen ? "Loading..." : ""}
+            compact
+            className={isOpen ? "justify-start px-2" : "justify-center"}
+            size={14}
+          />
         )}
 
         {menus?.data?.map((menu: Menu) => {

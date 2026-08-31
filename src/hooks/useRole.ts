@@ -12,10 +12,10 @@ import { toast } from "sonner";
 
 const ROLE_QUERY_KEY = ["roles"];
 
-export const useRoles = (page = 1) => {
+export const useRoles = (page = 1, search = "") => {
   return useQuery({
-    queryKey: [...ROLE_QUERY_KEY, page],
-    queryFn: () => getRoles(page),
+    queryKey: [...ROLE_QUERY_KEY, page, search],
+    queryFn: () => getRoles(page, search),
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,
@@ -24,10 +24,10 @@ export const useRoles = (page = 1) => {
   });
 };
 
-export const useAllRoles = () => {
+export const useAllRoles = (search = "") => {
   return useQuery({
-    queryKey: [...ROLE_QUERY_KEY, "all"],
-    queryFn: getAllRoles,
+    queryKey: [...ROLE_QUERY_KEY, "all", search],
+    queryFn: () => getAllRoles(search),
     staleTime: Infinity,
     gcTime: Infinity,
     refetchOnMount: false,
