@@ -10,7 +10,8 @@ export const ENDPOINTS = {
     MENU: "/menus",
     PERMISSION: "/permissions",
     USER: "/users",
-    ROLE: "/roles"
+    ROLE: "/roles",
+    DEPARTMENT: "/departments",
   }
 
 

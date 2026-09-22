@@ -9,6 +9,7 @@ import PermissionPage from "@/pages/permission/PermissionPage";
 import RolePage from "@/pages/role/RolePage";
 import UserPage from "@/pages/user/UserPage";
 import LandingPage from "@/pages/LandingPage";
+import DepartmentPage from "@/pages/department/DepartmentPage";
 
 export const router = createBrowserRouter([
     {
@@ -60,6 +61,14 @@ export const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <UserPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/departments",
+        element: (
+            <ProtectedRoute>
+                <DepartmentPage />
             </ProtectedRoute>
         ),
     },
