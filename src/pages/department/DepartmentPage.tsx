@@ -1,18 +1,25 @@
-import SearchBar from "@/components/common/SearchBar";
+import MasterPageHeader from "@/components/common/MasterPageHeader";
 import DepartmentForm from "@/components/department/DepartmentForm";
 import DepartmentTable from "@/components/department/DepartmentTable";
 import AppLayout from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useCan } from "@/hooks/useAuthorization";
 import { useDeleteDepartment, useDepartments } from "@/hooks/useDepartment";
+import { useMasterTable } from "@/hooks/useMasterTable";
 import type { Department } from "@/types/department.type";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 
 export default function DepartmentPage() {
-  const [page, setPage] = useState(1)
-  const [searchInput, setSearchInput] = useState("")
-  const [search, setSearch] = useState("")
+  const {
+    page,
+    search,
+    searchInput,
+    setSearchInput,
+    handleSearch,
+    handlePageChange,
+  } = useMasterTable()
+
   const { data, isLoading } = useDepartments(page, search)
   const deleteDepartment = useDeleteDepartment()
   const can = useCan()
@@ -41,31 +48,23 @@ export default function DepartmentPage() {
     setSelectedDepartment(undefined)
   }
 
-  const handlePageChange = (nextPage: number) => {
-    if (!nextPage || nextPage < 1) return
-    setPage(nextPage)
-  }
-
-  const handleSearch = useCallback((nextSearch: string) => {
-    setSearch(nextSearch)
-    setPage(1)
-  }, [])
-
   return (
     <AppLayout>
       <Card>
-        <CardHeader className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-          <CardTitle>Department Management</CardTitle>
-          <div className="flex w-full max-w-md items-center gap-3 md:ml-auto">
-            <SearchBar
-              value={searchInput}
-              onChange={setSearchInput}
-              onSearch={handleSearch}
-              placeholder="Search department..."
-            />
-            {can("create-permission") && <Button onClick={handleCreate}>Add Permission</Button>}
-          </div>
-        </CardHeader>
+        <MasterPageHeader
+          title="Department Management"
+          searchValue={searchInput}
+          onSearchChange={setSearchInput}
+          onSearch={handleSearch}
+          searchPlaceHolder="Search department"
+          action={
+            can("create-department") && (
+              <Button onClick={handleCreate}>
+                Add Department
+              </Button>
+            )
+          }
+        />
 
         <CardContent>
           <DepartmentTable
