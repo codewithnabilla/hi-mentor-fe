@@ -12,6 +12,7 @@ import {
     FileBarChart2,
     Folder,
     ShieldCheck,
+    BriefcaseBusiness
 } from "lucide-react";
 
 export const menuIcons = {
@@ -27,5 +28,6 @@ export const menuIcons = {
     CalendarMonth: Calendar,
     Assessment: FileBarChart2,
     Folder,
-    Permission: ShieldCheck
+    Permission: ShieldCheck,
+    Career: BriefcaseBusiness,
 };
