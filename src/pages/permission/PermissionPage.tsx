@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeletePermission, usePermissions } from "@/hooks/usePermission";
 import { useCan } from "@/hooks/useAuthorization";
 import type { Permission } from "@/types/permission.type";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function PermissionPage() {
   const [page, setPage] = useState(1);
@@ -46,10 +46,11 @@ export default function PermissionPage() {
     setPage(nextPage);
   };
 
-  const handleSearch = (nextSearch: string) => {
+  const handleSearch = useCallback((nextSearch: string) => {
     setSearch(nextSearch);
     setPage(1);
-  };
+  }, []);
+
 
   return (
     <AppLayout>

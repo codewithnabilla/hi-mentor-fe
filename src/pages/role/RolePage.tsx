@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useDeleteRole, useRoles } from "@/hooks/useRole";
 import { useCan, useCanAny } from "@/hooks/useAuthorization";
 import type { Role } from "@/types/role.type";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function RolePage() {
   const [page, setPage] = useState(1);
@@ -59,10 +59,10 @@ export default function RolePage() {
     setPage(nextPage);
   };
 
-  const handleSearch = (nextSearch: string) => {
+  const handleSearch = useCallback((nextSearch: string) => {
     setSearch(nextSearch);
     setPage(1);
-  };
+  }, []);
 
   return (
     <AppLayout>
