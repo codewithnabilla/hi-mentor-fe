@@ -1,6 +1,7 @@
 import { createDepartment, deleteDepartment, getAllDepartments, getDepartments, updateDepartment } from "@/services/master/department.service"
 import { getPermission } from "@/services/master/permission.service"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import axios from "axios"
 import { toast } from "sonner"
 
 const DEPARTMENT_QUERY_KEY = ["departments"]
@@ -47,8 +48,14 @@ export const useCreateDepartment = () => {
         queryKey: DEPARTMENT_QUERY_KEY
       })
     },
-    onError: () => {
-      toast.error("Failed to create department.");
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        const message = error.response?.data?.message;
+
+        toast.error(message ?? "Failed to create department.");
+      } else {
+        toast.error("Failed to create department.");
+      }
     },
   })
 }
@@ -64,8 +71,10 @@ export const useUpdateDepartment = () => {
         queryKey: DEPARTMENT_QUERY_KEY
       })
     },
-    onError: () => {
-      toast.error("Failed to update department.");
+    onError: (data) => {
+      console.log("ini data dep", data);
+
+      toast.error(data.message ?? "Failed to update department.");
     },
   })
 }
