@@ -10,6 +10,8 @@ import RolePage from "@/pages/role/RolePage";
 import UserPage from "@/pages/user/UserPage";
 import LandingPage from "@/pages/LandingPage";
 import DepartmentPage from "@/pages/department/DepartmentPage";
+import CareerPage from "@/pages/career/CareerPage";
+import SkillPage from "@/pages/skill/SkillPage";
 
 export const router = createBrowserRouter([
     {
@@ -69,6 +71,22 @@ export const router = createBrowserRouter([
         element: (
             <ProtectedRoute>
                 <DepartmentPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/careers",
+        element: (
+            <ProtectedRoute>
+                <CareerPage />
+            </ProtectedRoute>
+        ),
+    },
+    {
+        path: "/skills",
+        element: (
+            <ProtectedRoute>
+                <SkillPage />
             </ProtectedRoute>
         ),
     },

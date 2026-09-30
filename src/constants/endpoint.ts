@@ -12,6 +12,8 @@ export const ENDPOINTS = {
     USER: "/users",
     ROLE: "/roles",
     DEPARTMENT: "/departments",
+    CAREER: "/careers",
+    SKILL: "/skills"
   }
 
 
